@@ -28,7 +28,7 @@
     - CPUs 4
     - RAM 16GB
     - Minimum of 40GB OS
-    - Minimum of 220GB /var
+    - Minimum of 250GB /var
       - 150GB per Automation Controller
       - 40GB per EDA
       - 60GB per Automation Hub
