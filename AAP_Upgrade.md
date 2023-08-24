@@ -7,40 +7,84 @@
   - OS RHEL 8.6 or Later
   - Python 3.8
   - DNS Resolution of each host
+  - Chrony configurationed for all nodes
 - Automation Controller x3
-  - VMsizing
+  - VM Sizing:
     - CPUs 4
     - RAM 16
-    - min 40GB /var/lib/awx for execution environment storage on hyrbid nodes  
+    - Minimum of 40GB /var/lib/awx for execution environment storage on hyrbid nodes  
       - Projects are stored on control and hybrid nodes, and for the duration of jobs, are also stored on execution nodes. If the cluster has many large projects, consider doubling the GB in /var/lib/awx/projects, to avoid disk space errors
-    - min 40gb OS
+    - Minimum of 40GB OS
 - Automation Hub
-  - Ensure that the following domain names are part of either the firewall or the proxy’s allowlist for successful connection and download of collections from automation hub or Galaxy server:
-    - galaxy.ansible.com
-    - registry.redhat.com
-    - console.redhat.com
-  - VM Sizing
+  - VM Sizing:
     - CPUs 2
-    - RAM 8gb
-    - min 40gb OS
-    - min 60gb /var
+    - RAM 8GB
+    - Minimum of 40GB OS
+    - Minimum of 60GB /var
       - pulp will reside under /var and hold the collections and execution environments
 - Database
   - PostgresSQL 13
-  - VM Sizing
+  - VM Sizing:
     - CPUs 4
-    - RAM 16gb
-    - min 40GB OS
-    - min 220gb /var
-      - 40gb per controller
-      - 40gb per eda
-      - 60gb per hub
+    - RAM 16GB
+    - Minimum of 40GB OS
+    - Minimum of 250GB /var
+      - 150GB per Automation Controller
+      - 40GB per EDA
+      - 60GB per Automation Hub
 - Event Driven Automation
-  - VM Sizing
+  - VM Sizing:
     - CPU 4
-    - RAM 16gb
-    - min 40gb OS
-    - min 40gb /var
+    - RAM 16GB
+    - Minimum of 40GB OS
+    - Minimum of 40GB /var
+
+### Internet Access Requirements - Ensure that the following domain names are part of either the firewall or the proxy’s allowlist
+  - Notes
+    -  Image manifests and filesystem blobs are served directly from registry.redhat.io. However, from 1 May 2023, filesystem blobs are served from quay.io instead. To avoid problems pulling container images, you must enable outbound connections to the listed quay.io hostnames.
+    This change should be made to any firewall configuration that specifically enables outbound connections to registry.redhat.io.
+    Use the hostnames instead of IP addresses when configuring firewall rules.
+    After making this change, you can continue to pull images from registry.redhat.io. You do not require a quay.io login, or need to interact with the quay.io registry directly in any way to continue pulling Red Hat container images.
+    For more information, see the article [here](https://access.redhat.com/articles/6999582)
+  - All
+     - http://api.access.redhat.com:443
+      - General account services, subscriptions
+    - https://cert-api.access.redhat.com:443
+      - Insights data upload
+    - https://cert.cloud.redhat.com:443
+      - Inventory upload and Cloud Connector connection
+    - https://cloud.redhat.com
+      - Access to Insights dashboard 
+  - Automation Hub
+    - https://console.redhat.com:443
+      - General account services, subscriptions
+    - https://catalog.redhat.com
+      - Indexing execution environments
+    - https://sso.redhat.com:443
+      - TCP
+    - https://automation-hub-prd.s3.amazonaws.com https://automation-hub-prd.s3.us-east-2.amazonaws.com/
+      - Firewall access
+    - https://galaxy.ansible.com
+      - Ansible Community curated Ansible content
+    - https://ansible-galaxy.s3.amazonaws.com
+    - https://registry.redhat.io:443
+      - Access to container images provided by Red Hat and partners
+    - https://cert.cloud.redhat.com:443
+      - Red Hat and partner curated Ansible Collections 
+  - Execution Environment / Ansible Builder
+    - https://registry.redhat.io:443
+      - Access to container images provided by Red Hat and partners
+    - cdn.quay.io:443
+      - Access to container images provided by Red Hat and partners
+    - cdn01.quay.io:443
+      - Access to container images provided by Red Hat and partners
+    - cdn02.quay.io:443
+      - Access to container images provided by Red Hat and partners
+    - cdn03.quay.io:443
+      - Access to container images provided by Red Hat and partners 
+
+![Inter-AAP Network Connectivity Example](https://access.redhat.com/webassets/avalon/d/Red_Hat_Ansible_Automation_Platform-2.4-Red_Hat_Ansible_Automation_Platform_Planning_Guide-en-US/images/27a9a6b065f25d8f74b27b29d017b4b9/ansible-network-ports-protocols.png)
+
 
 ### Licensing requirements
 
