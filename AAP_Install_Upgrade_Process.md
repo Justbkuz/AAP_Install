@@ -1,4 +1,4 @@
-# Production AAP Installation / Upgrade
+# AAP Installation / Upgrade
 
 ## Requirements (Per Server)
 
