@@ -29,7 +29,7 @@
     - RAM 16GB
     - Minimum of 40GB OS
     - Minimum of 250GB /var
-      - 150GB per Automation Controller
+      - 50GB per Automation Controller x3
       - 40GB per EDA
       - 60GB per Automation Hub
 - Event Driven Automation
